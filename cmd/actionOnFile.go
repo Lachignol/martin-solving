@@ -70,5 +70,5 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	actionOnFileCmd.Flags().BoolVarP(&printValue,"print", "p", false, "Affiche le fichier modifié")
+	actionOnFileCmd.Flags().BoolVarP(&printValue, "print", "p", false, "Affiche le fichier modifié")
 }
