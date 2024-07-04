@@ -4,7 +4,6 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	
 	"log"
 	"strconv"
 
@@ -23,9 +22,9 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		number,err := strconv.Atoi(args[0])
-		if err != nil{
-			log.Println(err.Error())
+		number, err := strconv.Atoi(args[0])
+		if err != nil {
+			log.Println(err)
 		}
 		database.DeleteNote(number)
 	},

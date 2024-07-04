@@ -25,7 +25,6 @@ func DeleteNote(number int) {
 	if numberofligneOfDb >= number {
 		rows, err := db.Query("select * from digitalbrain")
 		checkErr(err)
-		fmt.Println(rows)
 		defer rows.Close()
 		count := 0
 		for rows.Next() {
@@ -36,10 +35,8 @@ func DeleteNote(number int) {
 			}
 
 			if count == number {
-				fmt.Printf("dans le bon nombre ")
 				fmt.Println("Suppression en cours pour la note:", FindedNote.Id, FindedNote.Name, FindedNote.Description)
 				id = FindedNote.Id
-				fmt.Println(FindedNote.Id)
 				rows.Close()
 				break
 			}
