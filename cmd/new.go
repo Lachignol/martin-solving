@@ -34,11 +34,9 @@ var newCmd = &cobra.Command{
 				Description: descriptionSend,
 			}
 			database.AddNote(newNote)
-		}else{
-			
+		} else {
 			fmt.Println("Ajout de note annulé veuillez tapez une nouvelle commande ")
 		}
-
 	},
 }
 var readyToAdd bool
@@ -80,11 +78,6 @@ func initialModel() model {
 			t.Placeholder = "Description"
 			t.CharLimit = 64
 		}
-		// case 2:
-		// 	t.Placeholder = "Password"
-		// 	t.EchoMode = textinput.EchoPassword
-		// 	t.EchoCharacter = '•'
-		// }
 
 		m.inputs[i] = t
 	}
@@ -103,8 +96,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "esc":
 			return m, tea.Quit
 
-		// Change cursor mode
-
 		// Set focus to next input
 		case "tab", "shift+tab", "enter", "up", "down":
 			s := msg.String()
@@ -112,10 +103,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			// Did the user press enter while the submit button was focused?
 			// If so, exit.
 			if s == "enter" && m.focusIndex == len(m.inputs) {
+			//initialisation de la variable dans le scope global a true quand on appui sur submit 
+			//pour ensuite l'ajouté au notes
 				readyToAdd = true
 				return m, tea.Quit
 			}
-
 			// Cycle indexes
 			if s == "up" || s == "shift+tab" {
 				m.focusIndex--
@@ -147,7 +139,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Batch(cmds...)
 		}
 	}
-
 	// Handle character input and blinking
 	cmd := m.updateInputs(msg)
 
@@ -181,8 +172,7 @@ func (m model) View() string {
 		button = &focusedButton
 	}
 	fmt.Fprintf(&b, "\n\n%s\n\n", *button)
-
-	b.WriteString(helpStyle.Render("Ajoutez votre nom en complétant les champs puis appuyer sur submit\ntapez esc ou ctrl+c pour quitter"))
+	b.WriteString(helpStyle.Render("tapez esc ou ctrl+c pour quitter"))
 	return b.String()
 }
 
