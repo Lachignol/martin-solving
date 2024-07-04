@@ -11,8 +11,7 @@ func AddNote(newNote Note) {
 	stmt, _ := db.Prepare("INSERT INTO digitalbrain (id,name,description) VALUES (?, ?, ?)")
 	stmt.Exec(nil, newNote.Name, newNote.Description)
 	defer stmt.Close()
-
-	fmt.Printf("Added %v %v \n", newNote.Name, newNote.Description)
+	fmt.Printf("Nouvelle note ajouté titre:%v description:%v \n", newNote.Name, newNote.Description)
 }
 
 func DeleteNote(number int) {

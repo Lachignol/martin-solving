@@ -1,11 +1,11 @@
 /*
-Copyright © 2024 Lachignol <EMAIL ADDRESS>
+Copyright © 2024 Lachignol <scordilisalexandre7@gmail.com>
 */
 package main
 
 import (
-	"github.com/Lachignol/cli-app/cmd"
-	"github.com/Lachignol/cli-app/database"
+	"github.com/Lachignol/martin-solving/cmd"
+	"github.com/Lachignol/martin-solving/database"
 )
 
 func main() {

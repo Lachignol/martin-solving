@@ -8,7 +8,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/Lachignol/cli-app/database"
+	"github.com/Lachignol/martin-solving/database"
 	"github.com/spf13/cobra"
 )
 
