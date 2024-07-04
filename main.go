@@ -10,8 +10,12 @@ import (
 	"github.com/Lachignol/martin-solving/database"
 )
 
-func main() {
+func init(){
 	database.OpenDb()
 	database.CreateTable()
+}
+
+func main() {
+	
 	cmd.Execute()
 }
