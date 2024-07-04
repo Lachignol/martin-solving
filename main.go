@@ -12,5 +12,6 @@ import (
 
 func main() {
 	database.OpenDb()
+	database.CreateTable()
 	cmd.Execute()
 }

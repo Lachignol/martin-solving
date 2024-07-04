@@ -15,14 +15,21 @@ var db *sql.DB
 
 func OpenDb() error {
 	userdire, _ := os.UserHomeDir()
-	dbPath := fmt.Sprintf("%s/go/src/github.com/Lachignol/martin-solving/sqlite-digitalBrain.db", userdire)
+	dirpath := fmt.Sprintf("%s/databaseForMartinSolving/", userdire)
+	dbPath := fmt.Sprintf("%s/databaseForMartinSolving/sqlite-digitalBrain.db", userdire)
 
 	// Vérifier si le fichier existe
 	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
-		log.Fatalf("Le fichier de la base de données %s n'existe pas.", dbPath)
-		return err
+		log.Printf("Le fichier de la base de données %s n'existe pas.", dbPath)
+		log.Printf("Nous procédons donc a l'installation ...")
+		//si il existe pas on crée le repertoire
+		err := os.Mkdir(dirpath, 0700)
+		if err != nil {
+			fmt.Println(err)
+		}
+		log.Printf("Création du repertoire %s .", dirpath)
+		log.Printf("Installation terminée.")
 	}
-
 	var err error
 	db, err = sql.Open("sqlite3", dbPath)
 	checkErr(err)
@@ -41,7 +48,7 @@ func CreateTable() {
 		log.Fatal(err.Error())
 	}
 	statement.Exec()
-	log.Println("Table digitalbrain crée")
+
 }
 
 func checkErr(err error) {
