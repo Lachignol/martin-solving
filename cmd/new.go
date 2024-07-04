@@ -5,13 +5,14 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/Lachignol/martin-solving/database"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/spf13/cobra"
-	"os"
-	"strings"
 )
 
 // newCmd represents the new command
@@ -21,11 +22,17 @@ var newCmd = &cobra.Command{
 	Long:  `Ajouter une nouvelle note`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if _, err := tea.NewProgram(initialModel()).Run(); err != nil {
+		if _, err := tea.NewProgram(initialModel(),tea.WithAltScreen()).Run(); err != nil {
 			fmt.Printf("could not start program: %s\n", err)
 			os.Exit(1)
 		}
-
+		
+		
+		//pour clear mais du coup opti que sur linux et mac pas top
+		// c := exec.Command("clear")
+        // c.Stdout = os.Stdout
+        // c.Run()
+		//
 		if readyToAdd {
 			nameSend := m.inputs[0].Value()
 			descriptionSend := m.inputs[1].Value()
@@ -105,6 +112,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if s == "enter" && m.focusIndex == len(m.inputs) {
 			//initialisation de la variable dans le scope global a true quand on appui sur submit 
 			//pour ensuite l'ajouté au notes
+			    
 				readyToAdd = true
 				return m, tea.Quit
 			}

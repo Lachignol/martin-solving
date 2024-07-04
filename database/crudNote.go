@@ -42,7 +42,7 @@ func DeleteNote(number int) {
 				fmt.Println(FindedNote.Id)
 				rows.Close()
 				break
-			} 
+			}
 
 		}
 		err = rows.Err()

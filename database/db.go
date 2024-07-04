@@ -2,6 +2,9 @@ package database
 
 import (
 	"database/sql"
+	_ "embed"
+	"fmt"
+	"os"
 
 	"log"
 
@@ -11,10 +14,20 @@ import (
 var db *sql.DB
 
 func OpenDb() error {
+	userdire, _ := os.UserHomeDir()
+	dbPath := fmt.Sprintf("%s/go/src/github.com/Lachignol/martin-solving/sqlite-digitalBrain.db", userdire)
+
+	// Vérifier si le fichier existe
+	if _, err := os.Stat(dbPath); os.IsNotExist(err) {
+		log.Fatalf("Le fichier de la base de données %s n'existe pas.", dbPath)
+		return err
+	}
+
 	var err error
-	db, err = sql.Open("sqlite3", "./sqlite-digitalBrain.db")
+	db, err = sql.Open("sqlite3", dbPath)
 	checkErr(err)
 	return db.Ping()
+
 }
 
 func CreateTable() {
