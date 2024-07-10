@@ -82,8 +82,8 @@ to quickly create a Cobra application.`,
 
 		columns := []table.Column{
 			{Title: "Id", Width: 4},
-			{Title: "Name", Width: 10},
-			{Title: "Description", Width: 10},
+			{Title: "Name", Width: 50},
+			{Title: "Description", Width: 60},
 		}
 		notes := database.RecupNotes()
 		var rows = []table.Row{}

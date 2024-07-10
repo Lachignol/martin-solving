@@ -85,7 +85,6 @@ func RecupNotes() []Note {
 	}
 	err = rows.Err()
 	checkErr(err)
-	fmt.Printf("%v", FindedNoteResult)
 	return FindedNoteResult
 
 }
