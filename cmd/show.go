@@ -118,7 +118,7 @@ to quickly create a Cobra application.`,
 		m := modelarray{
 			table: t,
 		}
-		if _, err := tea.NewProgram(m).Run(); err != nil {
+		if _, err := tea.NewProgram(m,tea.WithAltScreen()).Run(); err != nil {
 			fmt.Println("Error running program:", err)
 			os.Exit(1)
 		}
