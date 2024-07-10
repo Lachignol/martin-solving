@@ -8,7 +8,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Lachignol/martin-solving/database"
+	modelofApp "github.com/Lachignol/martin-solving/model"
+	"github.com/Lachignol/martin-solving/note"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -22,25 +23,19 @@ var newCmd = &cobra.Command{
 	Long:  `Ajouter une nouvelle note`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if _, err := tea.NewProgram(initialModel(),tea.WithAltScreen()).Run(); err != nil {
+		if _, err := tea.NewProgram(initialModel(), tea.WithAltScreen()).Run(); err != nil {
 			fmt.Printf("could not start program: %s\n", err)
 			os.Exit(1)
 		}
-		
-		
-		//pour clear mais du coup opti que sur linux et mac pas top
-		// c := exec.Command("clear")
-        // c.Stdout = os.Stdout
-        // c.Run()
-		//
+
 		if readyToAdd {
 			nameSend := m.inputs[0].Value()
 			descriptionSend := m.inputs[1].Value()
-			newNote := database.Note{
+			newNote := modelofApp.Note{
 				Name:        nameSend,
 				Description: descriptionSend,
 			}
-			database.AddNote(newNote)
+			note.AddNote(newNote)
 		} else {
 			fmt.Println("Ajout de note annulé veuillez tapez une nouvelle commande ")
 		}
@@ -110,9 +105,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			// Did the user press enter while the submit button was focused?
 			// If so, exit.
 			if s == "enter" && m.focusIndex == len(m.inputs) {
-			//initialisation de la variable dans le scope global a true quand on appui sur submit 
-			//pour ensuite l'ajouté au notes
-			    
+				//initialisation de la variable dans le scope global a true quand on appui sur submit
+				//pour ensuite l'ajouté au notes
+
 				readyToAdd = true
 				return m, tea.Quit
 			}

@@ -1,30 +1,33 @@
-package database
+package note
 
 import (
 	"fmt"
 	"log"
 
+	"github.com/Lachignol/martin-solving/database"
+	erreur "github.com/Lachignol/martin-solving/error"
+	"github.com/Lachignol/martin-solving/model"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func AddNote(newNote Note) {
-	stmt, _ := db.Prepare("INSERT INTO digitalbrain (id,name,description) VALUES (?, ?, ?)")
+func AddNote(newNote modelofApp.Note) {
+	stmt, _ := database.Db.Prepare("INSERT INTO digitalbrain (id,name,description) VALUES (?, ?, ?)")
 	stmt.Exec(nil, newNote.Name, newNote.Description)
 	defer stmt.Close()
 	fmt.Printf("Nouvelle note ajouté titre:%v description:%v \n", newNote.Name, newNote.Description)
 }
 
 func DeleteNote(number int) {
-	var FindedNote Note
+	var FindedNote modelofApp.Note
 	var id int
 	var numberofligneOfDb int
 
-	err := db.QueryRow("SELECT COUNT(*) FROM digitalbrain").Scan(&numberofligneOfDb)
-	checkErr(err)
+	err := database.Db.QueryRow("SELECT COUNT(*) FROM digitalbrain").Scan(&numberofligneOfDb)
+	erreur.CheckErr(err)
 
 	if numberofligneOfDb >= number {
-		rows, err := db.Query("select * from digitalbrain")
-		checkErr(err)
+		rows, err := database.Db.Query("select * from digitalbrain")
+		erreur.CheckErr(err)
 		defer rows.Close()
 		count := 0
 		for rows.Next() {
@@ -43,7 +46,7 @@ func DeleteNote(number int) {
 
 		}
 		err = rows.Err()
-		checkErr(err)
+		erreur.CheckErr(err)
 
 		fmt.Print("Voulez-vous vraiment supprimé cette note [y]/[n]? ")
 		var response string
@@ -54,10 +57,10 @@ func DeleteNote(number int) {
 		}
 		fmt.Println("You entered:", response)
 		if response == "yes" || response == "y" {
-			supp, _ := db.Prepare("DELETE FROM digitalbrain WHERE ID = ?")
+			supp, _ := database.Db.Prepare("DELETE FROM digitalbrain WHERE ID = ?")
 			defer supp.Close()
 			_, err := supp.Exec(id)
-			checkErr(err)
+			erreur.CheckErr(err)
 
 			log.Println("Note supprimé")
 		} else {
@@ -68,11 +71,11 @@ func DeleteNote(number int) {
 	}
 }
 
-func RecupNotes() []Note {
-	var FindedNote Note
-	var FindedNoteResult []Note
-	rows, err := db.Query("select * from digitalbrain ")
-	checkErr(err)
+func RecupNotes() []modelofApp.Note {
+	var FindedNote modelofApp.Note
+	var FindedNoteResult []modelofApp.Note
+	rows, err := database.Db.Query("select * from digitalbrain ")
+	erreur.CheckErr(err)
 	defer rows.Close()
 	count := 0
 	for rows.Next() {
@@ -84,7 +87,7 @@ func RecupNotes() []Note {
 		FindedNoteResult = append(FindedNoteResult, FindedNote)
 	}
 	err = rows.Err()
-	checkErr(err)
+	erreur.CheckErr(err)
 	return FindedNoteResult
 
 }

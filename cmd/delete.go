@@ -7,7 +7,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/Lachignol/martin-solving/database"
+	"github.com/Lachignol/martin-solving/note"
 	"github.com/spf13/cobra"
 )
 
@@ -26,7 +26,7 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			log.Println(err)
 		}
-		database.DeleteNote(number)
+		note.DeleteNote(number)
 	},
 }
 

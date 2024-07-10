@@ -8,7 +8,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Lachignol/martin-solving/database"
+	"github.com/Lachignol/martin-solving/note"
 	"github.com/spf13/cobra"
 
 	"github.com/charmbracelet/bubbles/table"
@@ -85,7 +85,7 @@ to quickly create a Cobra application.`,
 			{Title: "Name", Width: 50},
 			{Title: "Description", Width: 60},
 		}
-		notes := database.RecupNotes()
+		notes := note.RecupNotes()
 		var rows = []table.Row{}
 		count := 1
 		for _, note := range notes {
@@ -118,22 +118,14 @@ to quickly create a Cobra application.`,
 		m := modelarray{
 			table: t,
 		}
-		if _, err := tea.NewProgram(m,tea.WithAltScreen()).Run(); err != nil {
+		if _, err := tea.NewProgram(m, tea.WithAltScreen()).Run(); err != nil {
 			fmt.Println("Error running program:", err)
 			os.Exit(1)
 		}
 
-		// if selectedEdit!=""{
-		// cmd := exec.Command("ls", "-l")
-		// cmd.Stdout = os.Stdout
-		// err := cmd.Run()
-		// if err != nil {
-		// 	fmt.Println(err)
-		// }}
-
 		fmt.Println(selectedChoice)
 		if selectedDel != -1 {
-			database.DeleteNote(selectedDel)
+			note.DeleteNote(selectedDel)
 		}
 
 	},

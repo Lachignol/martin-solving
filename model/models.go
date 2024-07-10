@@ -1,4 +1,4 @@
-package database
+package modelofApp
 
 import (
 	_ "github.com/mattn/go-sqlite3"

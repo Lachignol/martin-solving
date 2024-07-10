@@ -8,10 +8,11 @@ import (
 
 	"log"
 
+	erreur "github.com/Lachignol/martin-solving/error"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var db *sql.DB
+var Db *sql.DB
 
 func OpenDb() error {
 	userdire, _ := os.UserHomeDir()
@@ -31,9 +32,9 @@ func OpenDb() error {
 		log.Printf("Installation terminée.")
 	}
 	var err error
-	db, err = sql.Open("sqlite3", dbPath)
-	checkErr(err)
-	return db.Ping()
+	Db, err = sql.Open("sqlite3", dbPath)
+	erreur.CheckErr(err)
+	return Db.Ping()
 
 }
 
@@ -43,16 +44,10 @@ func CreateTable() {
 	"name" TEXT,
 	"description" TEXT
 	);`
-	statement, err := db.Prepare(createTableSQL)
+	statement, err := Db.Prepare(createTableSQL)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	statement.Exec()
 
-}
-
-func checkErr(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
 }
