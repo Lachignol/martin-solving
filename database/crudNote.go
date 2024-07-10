@@ -68,12 +68,12 @@ func DeleteNote(number int) {
 	}
 }
 
-func ShowNotes() {
+func RecupNotes() []Note {
 	var FindedNote Note
+	var FindedNoteResult []Note
 	rows, err := db.Query("select * from digitalbrain ")
 	checkErr(err)
 	defer rows.Close()
-	fmt.Printf("%v-----%v----%v----,\n", "ID", "NOM", "OBJECTIF")
 	count := 0
 	for rows.Next() {
 		count += 1
@@ -81,10 +81,11 @@ func ShowNotes() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("%v--%v %v \n", count, FindedNote.Name, FindedNote.Description)
-
+		FindedNoteResult = append(FindedNoteResult, FindedNote)
 	}
 	err = rows.Err()
 	checkErr(err)
+	fmt.Printf("%v", FindedNoteResult)
+	return FindedNoteResult
 
 }
