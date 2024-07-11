@@ -26,7 +26,7 @@ to quickly create a Cobra application.`,
 		if err != nil {
 			log.Println(err)
 		}
-		note.DeleteNote(number)
+		note.DeleteTodo(number)
 	},
 }
 

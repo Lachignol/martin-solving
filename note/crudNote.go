@@ -11,14 +11,14 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func AddNote(newNoteTitle string) {
+func AddTodo(newNoteTitle string) {
 	stmt, _ := database.Db.Prepare("INSERT INTO digitalbrain (title,completed,created_at,completed_at) VALUES (?,?,?,?)")
 	stmt.Exec(newNoteTitle, false, time.Now(), nil)
 	defer stmt.Close()
 	fmt.Printf("Nouvelle tache ajouté titre:%v \n", newNoteTitle)
 }
 
-func DeleteNote(number int) {
+func DeleteTodo(number int) {
 	var FindedNote modelofApp.Note
 	var id int
 	var numberofligneOfDb int
@@ -72,7 +72,7 @@ func DeleteNote(number int) {
 	}
 }
 
-func RecupNotes() []modelofApp.Note {
+func RecupTodos() []modelofApp.Note {
 	var FindedNote modelofApp.Note
 	var FindedNoteResult []modelofApp.Note
 	rows, err := database.Db.Query("select * from digitalbrain ")
@@ -93,7 +93,7 @@ func RecupNotes() []modelofApp.Note {
 
 }
 
-func Edit(index int, newtitre string) error {
+func EditTodo(index int, newtitre string) error {
 	var FindedNote modelofApp.Note
 	var id int
 	var numberofligneOfDb int
@@ -155,7 +155,7 @@ func Edit(index int, newtitre string) error {
 	return nil
 }
 
-func Toggle(index int) error {
+func ToggleTodo(index int) error {
 	var FindedNote modelofApp.Note
 	var id int
 	var numberofligneOfDb int

@@ -29,7 +29,7 @@ var newCmd = &cobra.Command{
 
 		if readyToAdd {
 			title := m.inputs[0].Value()
-			note.AddNote(title)
+			note.AddTodo(title)
 		} else {
 			fmt.Println("Ajout de note annulé veuillez tapez une nouvelle commande ")
 		}

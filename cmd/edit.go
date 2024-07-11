@@ -34,7 +34,7 @@ var editCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
-		note.Edit(index,nouveautitre )
+		note.EditTodo(index,nouveautitre )
 	} else {
 		fmt.Println("Modification de note annulé veuillez tapez une nouvelle commande ")
 	}

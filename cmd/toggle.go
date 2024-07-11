@@ -21,7 +21,7 @@ var toggleCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
-		note.Toggle(number)
+		note.ToggleTodo(number)
 	},
 	}
 

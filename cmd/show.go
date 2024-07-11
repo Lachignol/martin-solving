@@ -57,7 +57,7 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.table.SelectedRow()[2] = "✅"
 				m.table.SelectedRow()[4] = currentTime.Format("02 January 2006 15:04:05")
 			}
-			note.Toggle(index)
+			note.ToggleTodo(index)
 			m.table.MoveDown(1)
 			return m, nil
 		case "q", "ctrl+c":
@@ -115,7 +115,7 @@ to quickly create a Cobra application.`,
 			{Title: "Created_at", Width: 22},
 			{Title: "Completed_at", Width: 22},
 		}
-		notes := note.RecupNotes()
+		notes := note.RecupTodos()
 		var rows = []table.Row{}
 		count := 1
 		for _, note := range notes {
@@ -171,7 +171,7 @@ to quickly create a Cobra application.`,
 
 		fmt.Println(selectedChoice)
 		if selectedDel != -1 {
-			note.DeleteNote(selectedDel)
+			note.DeleteTodo(selectedDel)
 		}
 		if selectedNew {
 			newCmd.Run(cmd, []string{})
