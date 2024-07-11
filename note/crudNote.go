@@ -15,7 +15,7 @@ func AddTodo(newNoteTitle string) {
 	stmt, _ := database.Db.Prepare("INSERT INTO digitalbrain (title,completed,created_at,completed_at) VALUES (?,?,?,?)")
 	stmt.Exec(newNoteTitle, false, time.Now(), nil)
 	defer stmt.Close()
-	fmt.Printf("Nouvelle tache ajouté titre:%v \n", newNoteTitle)
+	log.Printf("Nouvelle tâche ajoutée:%v \n", newNoteTitle)
 }
 
 func DeleteTodo(number int) {
@@ -39,7 +39,7 @@ func DeleteTodo(number int) {
 			}
 
 			if count == number {
-				fmt.Println("Suppression en cours pour la note:", FindedNote.Id, FindedNote.Title, FindedNote.Completed, FindedNote.Created_at, FindedNote.Completed_at)
+				log.Println("Suppression demandé pour la tâche:",  FindedNote.Title)
 				id = FindedNote.Id
 				rows.Close()
 				break
@@ -49,7 +49,7 @@ func DeleteTodo(number int) {
 		err = rows.Err()
 		erreur.CheckErr(err)
 
-		fmt.Print("Voulez-vous vraiment supprimé cette note [y]/[n]? ")
+		fmt.Print("Voulez-vous vraiment supprimé cette tâche [y]/[n]? ")
 		var response string
 		_, err = fmt.Scanln(&response)
 		if err != nil {
@@ -63,12 +63,12 @@ func DeleteTodo(number int) {
 			_, err := supp.Exec(id)
 			erreur.CheckErr(err)
 
-			log.Println("Note supprimé")
+			log.Println("La tâche a correctement été supprimée.")
 		} else {
-			log.Println("La note a été conservé ")
+			log.Println("La tâche a été conservée.")
 		}
 	} else {
-		log.Println("La note séléctioné n'existe pas ")
+		log.Println("La tâche sélectionnée n'existe pas ")
 	}
 }
 
@@ -123,14 +123,13 @@ func EditTodo(index int, newtitre string) error {
 		err = rows.Err()
 		erreur.CheckErr(err)
 
-		fmt.Print("Voulez-vous vraiment modifié cette note [y]/[n]? ")
+		fmt.Print("Voulez-vous vraiment modifié cette tâche [y]/[n]? ")
 		var response string
 		_, err = fmt.Scanln(&response)
 		if err != nil {
 			fmt.Println("Error reading input:", err)
 			return err
 		}
-		fmt.Println("You entered:", response)
 		if response == "yes" || response == "y" {
 			stmt, err := database.Db.Prepare("UPDATE digitalbrain SET title = ? WHERE id = ?")
 			if err != nil {
@@ -145,12 +144,12 @@ func EditTodo(index int, newtitre string) error {
 				return err
 			}
 
-			fmt.Printf("Le titre de la tâche avec l'ID %v a été mis à jour en: %v\n", id, newtitre)
+			log.Printf("Le titre de la tâche a bien été mis à jour. %v\n",newtitre)
 		} else {
-			log.Println("La note a été conservé ")
+			log.Println("La tâche a été conservée.")
 		}
 	} else {
-		log.Println("La note séléctioné n'existe pas ")
+		log.Println("La tâche sélectionnée n'existe pas")
 	}
 	return nil
 }
