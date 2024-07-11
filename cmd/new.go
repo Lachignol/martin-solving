@@ -22,7 +22,7 @@ var newCmd = &cobra.Command{
 	le mode interactif est aussi disponible en tapant show`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if _, err := tea.NewProgram(InitialModel()).Run(); err != nil {
+		if _, err := tea.NewProgram(InitialModel(), tea.WithAltScreen()).Run(); err != nil {
 			fmt.Printf("could not start program: %s\n", err)
 			os.Exit(1)
 		}
@@ -40,6 +40,7 @@ var M model
 var (
 	FocusedStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
 	TitleStyle   = lipgloss.NewStyle().Foreground(lipgloss.Color("205")).AlignVertical(lipgloss.Center)
+	FormStyle    = lipgloss.NewStyle().MarginLeft(75).MarginTop(20)
 	BlurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
 	CursorStyle  = FocusedStyle
 	NoStyle      = lipgloss.NewStyle()
@@ -49,7 +50,7 @@ var (
 	BlurredButton = fmt.Sprintf("[ %s ]", BlurredStyle.Render("Submit"))
 )
 
-type Model struct {
+type model struct {
 	focusIndex int
 	inputs     []textinput.Model
 }

@@ -68,9 +68,9 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "n":
 			selectedNew = true
 			return m, tea.Quit
-		case "enter":
-			selectedChoice = string(m.table.SelectedRow()[0])
-			return m, tea.Quit
+		// case "enter":
+		// 	selectedChoice = string(m.table.SelectedRow()[0])
+		// 	return m, tea.Quit
 
 		}
 	}
@@ -79,7 +79,7 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m modelarray) View() string {
-	return TitleStyle.Render("------------------------------------------------------------------------------------Martin Solving Todo---------------------------------------------------------------------------") + "\n" +
+	return TitleStyle.Render("----------------------------------------------------------------------------------Martin Solving Todo-----------------------------------------------------------------------------") + "\n" +
 		"\n" +
 		"\n" +
 		"\n" +
