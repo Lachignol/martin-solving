@@ -54,3 +54,24 @@ func CreateTable() {
 
 }
 
+func Uninstall() {
+	userdire, _ := os.UserHomeDir()
+	dirpath := fmt.Sprintf("%s/databaseForMartinSolving/", userdire)
+	dbPath := fmt.Sprintf("%s/databaseForMartinSolving/sqlite-digitalBrain.db", userdire)
+
+	err := os.Remove(dbPath)
+	if err != nil {
+		log.Fatal(err)
+
+	}
+
+	log.Printf("Supression du fichier %v \n\n", dbPath)
+
+	e := os.Remove(dirpath)
+	if e != nil {
+		log.Fatal(e)
+
+	}
+	log.Printf("Supression du repertoire %v\n\nIl ne vous reste plus qu'a supprimer le binaire 'martin-solving' dans le repertoire $HOME/go/bin/ .\n", dirpath)
+
+}

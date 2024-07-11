@@ -4,22 +4,37 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/Lachignol/martin-solving/database"
 	"github.com/spf13/cobra"
 )
 
 // initCmd represents the init command
-var initCmd = &cobra.Command{
-	Use:   "init",
-	Short: "initialize database and table for task",
-	Long:  "initialize database and table for task",
+var uninstallCmd = &cobra.Command{
+	Use:   "uninstall",
+	Short: "Permet de supprimé proprement l'application.",
+	Long:  "Supprime la base de données ainsi que son répertoire. Ensuite, il ne reste plus qu'à supprimer le binaire (instructions détaillées dans la commande).",
 	Run: func(cmd *cobra.Command, args []string) {
-		database.CreateTable()
+		fmt.Print("Voulez-vous vraiment supprimé l'application [y]/[n]? \n")
+		var response string
+		_, err := fmt.Scanln(&response)
+		if err != nil {
+			fmt.Println("Error reading input:", err)
+			return
+		}
+
+		if response == "yes" || response == "y" {
+			database.Uninstall()
+		} else {
+			fmt.Println("Supression de l'application annulé")
+		}
+
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(uninstallCmd)
 
 	// Here you will define your flags and configuration settings.
 
