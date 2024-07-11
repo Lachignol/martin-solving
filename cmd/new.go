@@ -61,7 +61,7 @@ func initialModel() model {
 	for i := range m.inputs {
 		t = textinput.New()
 		t.Cursor.Style = cursorStyle
-		t.CharLimit = 50
+		t.CharLimit = 40
 
 		switch i {
 		case 0:
