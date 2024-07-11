@@ -148,7 +148,7 @@ func EditTodo(index int, newtitre string) error {
 			log.Println("La tâche a été conservée.")
 		}
 	} else {
-		log.Println("La tâche sélectionnée n'existe pas")
+		log.Println("La tâche que vous voulez modifier n'existe pas.")
 	}
 	return nil
 }
@@ -211,6 +211,8 @@ func ToggleTodo(index int) error {
 		}
 
 		return nil
+	}else{
+		log.Println("La tâche sélectionnée n'existe pas")
 	}
 
 	return nil

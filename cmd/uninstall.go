@@ -15,6 +15,7 @@ var uninstallCmd = &cobra.Command{
 	Use:   "uninstall",
 	Short: "Permet de supprimé proprement l'application.",
 	Long:  "Supprime la base de données ainsi que son répertoire. Ensuite, il ne reste plus qu'à supprimer le binaire (instructions détaillées dans la commande).",
+	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print("Voulez-vous vraiment supprimé l'application [y]/[n]? \n")
 		var response string

@@ -17,6 +17,7 @@ var toggleCmd = &cobra.Command{
 	Short: "Changer le status de la tache",
 	Long:  `Methode en ligne de commande afin de modifier le titre d'une tache.
 	le mode interactif est aussi disponible en tapant show`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		number, err := strconv.Atoi(args[0])
 		if err != nil {

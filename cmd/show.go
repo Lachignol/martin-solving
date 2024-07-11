@@ -103,6 +103,7 @@ var showCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Permet de lister les taches",
 	Long:  `Ceci est une liste interactive. Les actions possibles sont renseignées au bas du tableau.`,
+	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		columns := []table.Column{

@@ -20,6 +20,7 @@ var newCmd = &cobra.Command{
 	Short: "Ajouter une nouvelle note",
 	Long: `Methode en ligne de commande afin d'ajouter une tache.
 	le mode interactif est aussi disponible en tapant show`,
+	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		if _, err := tea.NewProgram(InitialModel(), tea.WithAltScreen()).Run(); err != nil {

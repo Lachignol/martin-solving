@@ -22,6 +22,7 @@ var editCmd = &cobra.Command{
 	Short: "Editer une tache existante",
 	Long: `Methode en ligne de commande afin de modifier le titre d'une tache.
 	le mode interactif est aussi disponible en tapant show`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		if _, err := tea.NewProgram(initialModel(), tea.WithAltScreen()).Run(); err != nil {
