@@ -63,7 +63,6 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "e":
-			readyToChange = true
 			selectedEdit = string(m.table.SelectedRow()[0])
 			return m, tea.Quit
 		case "d":
@@ -99,13 +98,8 @@ func (m modelarray) View() string {
 // showCmd represents the show command
 var showCmd = &cobra.Command{
 	Use:   "show",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Permet de lister les taches",
+	Long: `Ceci est une liste interactive. Les actions possibles sont renseignées au bas du tableau.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		columns := []table.Column{
@@ -187,7 +181,7 @@ to quickly create a Cobra application.`,
 	}}
 
 func init() {
-	noteCmd.AddCommand(showCmd)
+	todoCmd.AddCommand(showCmd)
 
 	// Here you will define your flags and configuration settings.
 

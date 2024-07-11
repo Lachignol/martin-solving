@@ -19,7 +19,8 @@ import (
 var newCmd = &cobra.Command{
 	Use:   "new",
 	Short: "Ajouter une nouvelle note",
-	Long:  `Ajouter une nouvelle note`,
+	Long:  `Methode en ligne de commande afin d'ajouter une tache.
+	le mode interactif est aussi disponible en tapant show`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		if _, err := tea.NewProgram(InitialModel()).Run(); err != nil {
@@ -174,7 +175,7 @@ func (m *model) UpdateInputs(msg tea.Msg) tea.Cmd {
 // }
 
 func init() {
-	noteCmd.AddCommand(newCmd)
+	todoCmd.AddCommand(newCmd)
 
 	// Here you will define your flags and configuration settings.
 

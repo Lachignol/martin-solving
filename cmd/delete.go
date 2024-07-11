@@ -13,14 +13,10 @@ import (
 
 // deleteCmd represents the delete command
 var deleteCmd = &cobra.Command{
-	Use:   "delete",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Use:   "del [index de la tache a supprimer]",
+	Short: "Permet de supprimer une tache",
+	Long: `Methode en ligne de commande afin de supprimer une tache.
+	le mode interactif est aussi disponible en tapant show`,
 	Run: func(cmd *cobra.Command, args []string) {
 		number, err := strconv.Atoi(args[0])
 		if err != nil {
@@ -31,7 +27,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	noteCmd.AddCommand(deleteCmd)
+	todoCmd.AddCommand(deleteCmd)
 
 	// Here you will define your flags and configuration settings.
 

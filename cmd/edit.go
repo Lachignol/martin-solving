@@ -18,32 +18,30 @@ import (
 
 // newCmd represents the new command
 var editCmd = &cobra.Command{
-	Use:   "edit",
+	Use:   "edit [index de la tache a modifier]",
 	Short: "Editer une tache existante",
-	Long:  `Ajouter une nouvelle note`,
+	Long:  `Methode en ligne de commande afin de modifier le titre d'une tache.
+	le mode interactif est aussi disponible en tapant show`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 	if _, err := tea.NewProgram(initialModel()).Run(); err != nil {
 		fmt.Printf("could not start program: %s\n", err)
 		os.Exit(1)
 	}
-
-	if readyToChange {
-		index, err := strconv.Atoi(args[0])
+	index, err := strconv.Atoi(args[0])
+	
 		nouveautitre  := m.inputs[0].Value()
 		if err != nil {
 			log.Println(err)
 		}
 		note.EditTodo(index,nouveautitre )
-	} else {
-		fmt.Println("Modification de note annulé veuillez tapez une nouvelle commande ")
-	}
+	
 },
 }
 		
 		
 
-var readyToChange bool
+
 var m model
 
 type model struct {
@@ -173,7 +171,7 @@ return b.String()
 
 
 func init() {
-	noteCmd.AddCommand(editCmd)
+	todoCmd.AddCommand(editCmd)
 
 	// Here you will define your flags and configuration settings.
 

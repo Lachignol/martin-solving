@@ -13,9 +13,10 @@ import (
 
 // newCmd represents the new command
 var toggleCmd = &cobra.Command{
-	Use:   "toggle",
+	Use:   "toggle [index de la tache a completed/uncompleted]",
 	Short: "Changer le status de la tache",
-	Long:  `Ajouter une nouvelle note`,
+	Long:  `Methode en ligne de commande afin de modifier le titre d'une tache.
+	le mode interactif est aussi disponible en tapant show`,
 	Run: func(cmd *cobra.Command, args []string) {
 		number, err := strconv.Atoi(args[0])
 		if err != nil {
@@ -27,7 +28,7 @@ var toggleCmd = &cobra.Command{
 
 
 func init() {
-	noteCmd.AddCommand(toggleCmd)
+	todoCmd.AddCommand(toggleCmd)
 
 	// Here you will define your flags and configuration settings.
 

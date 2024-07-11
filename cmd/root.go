@@ -12,8 +12,8 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "martin-solving",
-	Short: "cli multi-tool",
-	Long:  `l'idée est de crée mon premier cli `,
+	Short: "Cli multi-tool",
+	Long:  `L'idée est de créer un CLI avec plusieurs fonctionnalités. `,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
