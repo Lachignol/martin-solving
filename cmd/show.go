@@ -30,7 +30,8 @@ var selectedDel = -1
 
 var baseStyle = lipgloss.NewStyle().
 	BorderStyle(lipgloss.NormalBorder()).
-	BorderForeground(lipgloss.Color("240"))
+	BorderForeground(lipgloss.Color("240")).
+	MarginTop(30).Align()
 
 func (m modelarray) Init() tea.Cmd { return nil }
 
@@ -151,10 +152,10 @@ to quickly create a Cobra application.`,
 
 		s := table.DefaultStyles()
 		s.Header = s.Header.
-			BorderStyle(lipgloss.NormalBorder()).
+			BorderStyle(lipgloss.DoubleBorder()).
 			BorderForeground(lipgloss.Color("240")).
 			BorderBottom(true).
-			Bold(false)
+			Bold(true)
 		s.Selected = s.Selected.
 			Foreground(lipgloss.Color("229")).
 			Background(lipgloss.Color("57")).

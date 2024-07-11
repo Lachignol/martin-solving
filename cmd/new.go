@@ -41,7 +41,7 @@ var (
 	focusedStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
 	blurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
 	cursorStyle  = focusedStyle
-	noStyle      = lipgloss.NewStyle()
+	NoStyle      = lipgloss.NewStyle()
 	HelpStyle    = blurredStyle
 
 	focusedButton = focusedStyle.Render("[ Submit ]")
@@ -129,8 +129,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				}
 				// Remove focused state
 				m.inputs[i].Blur()
-				m.inputs[i].PromptStyle = noStyle
-				m.inputs[i].TextStyle = noStyle
+				m.inputs[i].PromptStyle = NoStyle
+				m.inputs[i].TextStyle = NoStyle
 			}
 
 			return m, tea.Batch(cmds...)
