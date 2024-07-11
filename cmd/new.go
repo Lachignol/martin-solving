@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
-	modelofApp "github.com/Lachignol/martin-solving/model"
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -23,19 +21,14 @@ var newCmd = &cobra.Command{
 	Long:  `Ajouter une nouvelle note`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if _, err := tea.NewProgram(initialModel(), tea.WithAltScreen()).Run(); err != nil {
+		if _, err := tea.NewProgram(initialModel()).Run(); err != nil {
 			fmt.Printf("could not start program: %s\n", err)
 			os.Exit(1)
 		}
 
 		if readyToAdd {
-			nameSend := m.inputs[0].Value()
-			descriptionSend := m.inputs[1].Value()
-			newNote := modelofApp.Note{
-				Name:        nameSend,
-				Description: descriptionSend,
-			}
-			note.AddNote(newNote)
+			title := m.inputs[0].Value()
+			note.AddNote(title)
 		} else {
 			fmt.Println("Ajout de note annulé veuillez tapez une nouvelle commande ")
 		}
@@ -48,7 +41,7 @@ var (
 	blurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
 	cursorStyle  = focusedStyle
 	noStyle      = lipgloss.NewStyle()
-	helpStyle    = blurredStyle
+	HelpStyle    = blurredStyle
 
 	focusedButton = focusedStyle.Render("[ Submit ]")
 	blurredButton = fmt.Sprintf("[ %s ]", blurredStyle.Render("Submit"))
@@ -61,7 +54,7 @@ type model struct {
 
 func initialModel() model {
 	m = model{
-		inputs: make([]textinput.Model, 2),
+		inputs: make([]textinput.Model, 1),
 	}
 
 	var t textinput.Model
@@ -72,13 +65,13 @@ func initialModel() model {
 
 		switch i {
 		case 0:
-			t.Placeholder = "Nom de la note"
+			t.Placeholder = "Nom de la tache"
 			t.Focus()
 			t.PromptStyle = focusedStyle
 			t.TextStyle = focusedStyle
-		case 1:
-			t.Placeholder = "Description"
-			t.CharLimit = 64
+		// case 1:
+		// 	t.Placeholder = "Description"
+		// 	t.CharLimit = 64
 		}
 
 		m.inputs[i] = t
@@ -175,7 +168,7 @@ func (m model) View() string {
 		button = &focusedButton
 	}
 	fmt.Fprintf(&b, "\n\n%s\n\n", *button)
-	b.WriteString(helpStyle.Render("tapez esc ou ctrl+c pour quitter"))
+	b.WriteString(HelpStyle.Render("tapez esc ou ctrl+c pour quitter"))
 	return b.String()
 }
 

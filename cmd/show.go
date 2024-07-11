@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/spf13/cobra"
@@ -22,6 +23,8 @@ type modelarray struct {
 
 var selectedChoice string
 var selectedEdit string
+var selectedToggle = -1
+
 var selectedDel = -1
 
 var baseStyle = lipgloss.NewStyle().
@@ -41,6 +44,13 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			} else {
 				m.table.Focus()
 			}
+		case "t":
+			index, err := strconv.Atoi(m.table.SelectedRow()[0])
+			if err != nil {
+				fmt.Println(err)
+			}
+			selectedToggle = index
+			return m, tea.Quit
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "e":
@@ -65,7 +75,12 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m modelarray) View() string {
-	return baseStyle.Render(m.table.View()) + "\n"
+	return baseStyle.Render(m.table.View()) + "\n" +
+		HelpStyle.Render("[ Tapez q ou ctrl+c pour quitter ]") + " " +
+		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + " " +
+		HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
+		HelpStyle.Render("[ Tapez d pour supprimer la tache ]") + " " +
+		HelpStyle.Render("[ Tapez e pour editer la tache ]")
 }
 
 // showCmd represents the show command
@@ -82,17 +97,34 @@ to quickly create a Cobra application.`,
 
 		columns := []table.Column{
 			{Title: "Id", Width: 4},
-			{Title: "Name", Width: 50},
-			{Title: "Description", Width: 60},
+			{Title: "Titre", Width: 40},
+			{Title: "Completed", Width: 10},
+			{Title: "Created_at", Width: 55},
+			{Title: "Completed_at", Width: 55},
 		}
 		notes := note.RecupNotes()
 		var rows = []table.Row{}
 		count := 1
 		for _, note := range notes {
+			completed := note.Completed
+			completedAt := ""
+			var iscompleted string
+			if !completed {
+				iscompleted = "❌"
+			} else {
+				iscompleted = "✅"
+			}
+			if note.Completed_at != nil {
+				completedAt = note.Completed_at.Format(time.RFC850)
+			}
+
 			rows = append(rows, table.Row{
 				strconv.FormatInt(int64(count), 10),
-				note.Name,
-				note.Description})
+				note.Title,
+				iscompleted,
+				note.Created_at.Format(time.RFC850),
+				completedAt,
+			})
 			count++
 		}
 
@@ -100,7 +132,7 @@ to quickly create a Cobra application.`,
 			table.WithColumns(columns),
 			table.WithRows(rows),
 			table.WithFocused(true),
-			table.WithHeight(7),
+			table.WithHeight(20),
 		)
 
 		s := table.DefaultStyles()
@@ -126,6 +158,15 @@ to quickly create a Cobra application.`,
 		fmt.Println(selectedChoice)
 		if selectedDel != -1 {
 			note.DeleteNote(selectedDel)
+		}
+		if selectedToggle != -1 {
+			err := note.Toggle(selectedToggle)
+			if err != nil {
+				fmt.Println(err)
+			} else {
+				fmt.Println("status de la tache correctement changé")
+			}
+
 		}
 
 	},

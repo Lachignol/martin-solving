@@ -41,8 +41,10 @@ func OpenDb() error {
 func CreateTable() {
 	createTableSQL := `CREATE TABLE IF NOT EXISTS digitalbrain (
 	"id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	"name" TEXT,
-	"description" TEXT
+    "title" TEXT NOT NULL,
+    "completed" BOOLEAN NOT NULL,
+    "created_at" DATETIME NOT NULL,
+    "completed_at" DATETIME
 	);`
 	statement, err := Db.Prepare(createTableSQL)
 	if err != nil {
@@ -51,3 +53,4 @@ func CreateTable() {
 	statement.Exec()
 
 }
+
