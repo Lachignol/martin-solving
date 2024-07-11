@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/spf13/cobra"
@@ -97,10 +96,10 @@ to quickly create a Cobra application.`,
 
 		columns := []table.Column{
 			{Title: "Id", Width: 4},
-			{Title: "Titre", Width: 40},
-			{Title: "Completed", Width: 10},
-			{Title: "Created_at", Width: 55},
-			{Title: "Completed_at", Width: 55},
+			{Title: "Titre", Width: 109},
+			{Title: "Completed", Width: 9},
+			{Title: "Created_at", Width: 22},
+			{Title: "Completed_at", Width: 22},
 		}
 		notes := note.RecupNotes()
 		var rows = []table.Row{}
@@ -115,14 +114,15 @@ to quickly create a Cobra application.`,
 				iscompleted = "✅"
 			}
 			if note.Completed_at != nil {
-				completedAt = note.Completed_at.Format(time.RFC850)
+
+				completedAt = note.Completed_at.Format("02 January 2006 15:04:05")
 			}
 
 			rows = append(rows, table.Row{
 				strconv.FormatInt(int64(count), 10),
 				note.Title,
 				iscompleted,
-				note.Created_at.Format(time.RFC850),
+				note.Created_at.Format("02 January 2006 15:04:05"),
 				completedAt,
 			})
 			count++
