@@ -72,6 +72,6 @@ func Uninstall() {
 		log.Fatal(e)
 
 	}
-	log.Printf("Supression du repertoire %v\n\nIl ne vous reste plus qu'a supprimer le binaire 'martin-solving' dans le repertoire $HOME/go/bin/ .\n", dirpath)
+	log.Printf("Supression du repertoire %v\n\nIl ne vous reste plus qu'a supprimer le binaire 'martin-solving' dans le repertoire $HOME/go/bin/ .Pour y accéder,tapez 'cd $HOME/go/bin/'.\n", dirpath)
 
 }

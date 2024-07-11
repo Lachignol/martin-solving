@@ -15,7 +15,7 @@ func AddTodo(newNoteTitle string) {
 	stmt, _ := database.Db.Prepare("INSERT INTO digitalbrain (title,completed,created_at,completed_at) VALUES (?,?,?,?)")
 	stmt.Exec(newNoteTitle, false, time.Now(), nil)
 	defer stmt.Close()
-	log.Printf("Nouvelle tâche ajoutée:%v \n", newNoteTitle)
+	log.Println("Nouvelle tâche ajoutée correctement.")
 }
 
 func DeleteTodo(number int) {
@@ -39,7 +39,7 @@ func DeleteTodo(number int) {
 			}
 
 			if count == number {
-				log.Println("Suppression demandé pour la tâche:",  FindedNote.Title)
+				log.Println("Suppression demandé pour la tâche:", FindedNote.Title)
 				id = FindedNote.Id
 				rows.Close()
 				break
@@ -212,6 +212,6 @@ func ToggleTodo(index int) error {
 
 		return nil
 	}
-	
+
 	return nil
 }
