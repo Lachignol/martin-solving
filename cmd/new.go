@@ -6,7 +6,7 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strings"
+
 
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -22,7 +22,7 @@ var newCmd = &cobra.Command{
 	Long:  `Ajouter une nouvelle note`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		if _, err := tea.NewProgram(initialModel()).Run(); err != nil {
+		if _, err := tea.NewProgram(InitialModel()).Run(); err != nil {
 			fmt.Printf("could not start program: %s\n", err)
 			os.Exit(1)
 		}
@@ -36,24 +36,24 @@ var newCmd = &cobra.Command{
 	},
 }
 var readyToAdd bool
-var m model
+var M model
 var (
-	focusedStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
-	blurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
-	cursorStyle  = focusedStyle
+	FocusedStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
+	BlurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
+	CursorStyle  = FocusedStyle
 	NoStyle      = lipgloss.NewStyle()
-	HelpStyle    = blurredStyle
+	HelpStyle    = BlurredStyle
 
-	focusedButton = focusedStyle.Render("[ Submit ]")
-	blurredButton = fmt.Sprintf("[ %s ]", blurredStyle.Render("Submit"))
+	FocusedButton = FocusedStyle.Render("[ Submit ]")
+	BlurredButton = fmt.Sprintf("[ %s ]", BlurredStyle.Render("Submit"))
 )
 
-type model struct {
+type Model struct {
 	focusIndex int
 	inputs     []textinput.Model
 }
 
-func initialModel() model {
+func InitialModel() model {
 	m = model{
 		inputs: make([]textinput.Model, 1),
 	}
@@ -61,15 +61,15 @@ func initialModel() model {
 	var t textinput.Model
 	for i := range m.inputs {
 		t = textinput.New()
-		t.Cursor.Style = cursorStyle
+		t.Cursor.Style = CursorStyle
 		t.CharLimit = 109
 
 		switch i {
 		case 0:
 			t.Placeholder = "Nom de la nouvelle tache"
 			t.Focus()
-			t.PromptStyle = focusedStyle
-			t.TextStyle = focusedStyle
+			t.PromptStyle = FocusedStyle
+			t.TextStyle = FocusedStyle
 			// case 1:
 			// 	t.Placeholder = "Description"
 			// 	t.CharLimit = 64
@@ -81,11 +81,11 @@ func initialModel() model {
 	return m
 }
 
-func (m model) Init() tea.Cmd {
+func (m model) init() tea.Cmd {
 	return textinput.Blink
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m model) update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
@@ -123,8 +123,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				if i == m.focusIndex {
 					// Set focused state
 					cmds[i] = m.inputs[i].Focus()
-					m.inputs[i].PromptStyle = focusedStyle
-					m.inputs[i].TextStyle = focusedStyle
+					m.inputs[i].PromptStyle = FocusedStyle
+					m.inputs[i].TextStyle = FocusedStyle
 					continue
 				}
 				// Remove focused state
@@ -142,7 +142,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m *model) updateInputs(msg tea.Msg) tea.Cmd {
+func (m *model) UpdateInputs(msg tea.Msg) tea.Cmd {
 	cmds := make([]tea.Cmd, len(m.inputs))
 
 	// Only text inputs with Focus() set will respond, so it's safe to simply
@@ -154,24 +154,24 @@ func (m *model) updateInputs(msg tea.Msg) tea.Cmd {
 	return tea.Batch(cmds...)
 }
 
-func (m model) View() string {
-	var b strings.Builder
+// func (m model) view() string {
+// 	var b strings.Builder
 
-	for i := range m.inputs {
-		b.WriteString(m.inputs[i].View())
-		if i < len(m.inputs)-1 {
-			b.WriteRune('\n')
-		}
-	}
+// 	for i := range m.inputs {
+// 		b.WriteString(m.inputs[i].View())
+// 		if i < len(m.inputs)-1 {
+// 			b.WriteRune('\n')
+// 		}
+// 	}
 
-	button := &blurredButton
-	if m.focusIndex == len(m.inputs) {
-		button = &focusedButton
-	}
-	fmt.Fprintf(&b, "\n\n%s\n\n", *button)
-	b.WriteString(HelpStyle.Render("tapez esc ou ctrl+c pour quitter"))
-	return b.String()
-}
+// 	button := &BlurredButton
+// 	if m.focusIndex == len(m.inputs) {
+// 		button = &FocusedButton
+// 	}
+// 	fmt.Fprintf(&b, "\n\n%s\n\n", *button)
+// 	b.WriteString(HelpStyle.Render("tapez esc ou ctrl+c pour quitter"))
+// 	return b.String()
+// }
 
 func init() {
 	noteCmd.AddCommand(newCmd)

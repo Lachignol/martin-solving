@@ -24,8 +24,6 @@ type modelarray struct {
 var selectedChoice string
 var selectedNew = false
 var selectedEdit string
-var selectedToggle = -1
-
 var selectedDel = -1
 
 var baseStyle = lipgloss.NewStyle().
@@ -65,6 +63,7 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "e":
+			readyToChange = true
 			selectedEdit = string(m.table.SelectedRow()[0])
 			return m, tea.Quit
 		case "d":
@@ -92,7 +91,7 @@ func (m modelarray) View() string {
 		HelpStyle.Render("[ Tapez q ou ctrl+c pour quitter ]") + " " +
 		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + " " +
 		HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
-		HelpStyle.Render("[ Tapez n pour ajouter une tache ]") + " " +
+		HelpStyle.Render("[ Tapez n/e pour ajouter/modifier une tache ]") + " " +
 		HelpStyle.Render("[ Tapez d pour supprimer la tache ]") + " "
 	// HelpStyle.Render("[ Tapez e pour editer la tache ]")
 }
@@ -181,6 +180,10 @@ to quickly create a Cobra application.`,
 			// }
 
 		}
+		if selectedEdit != "" {
+			editCmd.Run(cmd, []string{selectedEdit})
+		}
+
 	}}
 
 func init() {
