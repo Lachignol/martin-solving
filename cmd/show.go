@@ -28,8 +28,7 @@ var selectedDel = -1
 
 var baseStyle = lipgloss.NewStyle().
 	BorderStyle(lipgloss.NormalBorder()).
-	BorderForeground(lipgloss.Color("240")).
-	MarginTop(30).Align()
+	BorderForeground(lipgloss.Color("240"))
 
 func (m modelarray) Init() tea.Cmd { return nil }
 
@@ -38,12 +37,6 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "esc":
-			if m.table.Focused() {
-				m.table.Blur()
-			} else {
-				m.table.Focus()
-			}
 		case "t":
 			index, err := strconv.Atoi(m.table.SelectedRow()[0])
 			if err != nil {
@@ -60,7 +53,7 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			note.ToggleTodo(index)
 			m.table.MoveDown(1)
 			return m, nil
-		case "q", "ctrl+c":
+		case "esc", "q", "ctrl+c":
 			return m, tea.Quit
 		case "e":
 			selectedEdit = string(m.table.SelectedRow()[0])
@@ -86,20 +79,30 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m modelarray) View() string {
-	return baseStyle.Render(m.table.View()) + "\n" +
-		HelpStyle.Render("[ Tapez q ou ctrl+c pour quitter ]") + " " +
-		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + " " +
+	return TitleStyle.Render("------------------------------------------------------------------------------------Martin Solving Todo---------------------------------------------------------------------------") + "\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		"\n" +
+		HelpStyle.Render("[ Tapez Esc ou ctrl+c ou q pour quitter ]") + "\n" +
+		baseStyle.Render(m.table.View()) + "\n" + " " + " "+ " "+
+		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + "" +
 		HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
-		HelpStyle.Render("[ Tapez n/e pour ajouter/modifier une tache ]") + " " +
-		HelpStyle.Render("[ Tapez d pour supprimer la tache ]") + " "
-	// HelpStyle.Render("[ Tapez e pour editer la tache ]")
+		HelpStyle.Render("[ Tapez n ajouter une tache ]") + " " +
+		HelpStyle.Render("[ Tapez e modifier le titre d'une tache ]") + " " +
+		HelpStyle.Render("[ Tapez d supprimer la tache ]") + " "
 }
 
 // showCmd represents the show command
 var showCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Permet de lister les taches",
-	Long: `Ceci est une liste interactive. Les actions possibles sont renseignées au bas du tableau.`,
+	Long:  `Ceci est une liste interactive. Les actions possibles sont renseignées au bas du tableau.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		columns := []table.Column{

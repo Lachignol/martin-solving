@@ -39,6 +39,7 @@ var readyToAdd bool
 var M model
 var (
 	FocusedStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
+	TitleStyle   = lipgloss.NewStyle().Foreground(lipgloss.Color("205")).AlignVertical(lipgloss.Center)
 	BlurredStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("240"))
 	CursorStyle  = FocusedStyle
 	NoStyle      = lipgloss.NewStyle()
