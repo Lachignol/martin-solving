@@ -5,7 +5,7 @@ Voici ma premiere fonctionalité la plus basique 😀 la todo-list !!!!
 
 Interphace graphique:
 
-https://github.com/Lachignol/cli-app/assets/110435478/a4714dab-9cd4-44f6-825c-0db0b30112ec
+https://github.com/Lachignol/cli-app/assets/110435478/acfd42b1-12cb-406c-826e-a31e1d844e5e
 
 ✅ Ajout d'une nouvelle tâche.
 ✅ Possibilité de marquer la tâche comme "complétée".
