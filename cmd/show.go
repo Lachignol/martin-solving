@@ -174,14 +174,6 @@ to quickly create a Cobra application.`,
 		if selectedDel != -1 {
 			note.DeleteNote(selectedDel)
 		}
-		if selectedToggle != -1 {
-			err := note.Toggle(selectedToggle)
-			if err != nil {
-				fmt.Println(err)
-			} else {
-				fmt.Println("status de la tache correctement changé")
-			}
-		}
 		if selectedNew {
 			newCmd.Run(cmd, []string{})
 			// if err != nil {
