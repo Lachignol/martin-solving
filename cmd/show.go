@@ -59,7 +59,8 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.table.SelectedRow()[4] = currentTime.Format("02 January 2006 15:04:05")
 			}
 			note.Toggle(index)
-			return m,nil
+			m.table.MoveDown(1)
+			return m, nil
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "e":
