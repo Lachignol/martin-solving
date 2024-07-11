@@ -56,7 +56,6 @@ func DeleteTodo(number int) {
 			fmt.Println("Error reading input:", err)
 			return
 		}
-		fmt.Println("You entered:", response)
 		if response == "yes" || response == "y" {
 			supp, _ := database.Db.Prepare("DELETE FROM digitalbrain WHERE ID = ?")
 			defer supp.Close()
@@ -144,7 +143,7 @@ func EditTodo(index int, newtitre string) error {
 				return err
 			}
 
-			log.Printf("Le titre de la tâche a bien été mis à jour. %v\n",newtitre)
+			log.Println("Le titre de la tâche a bien été mis à jour.")
 		} else {
 			log.Println("La tâche a été conservée.")
 		}

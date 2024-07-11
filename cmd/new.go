@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 
-
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -19,7 +18,7 @@ import (
 var newCmd = &cobra.Command{
 	Use:   "new",
 	Short: "Ajouter une nouvelle note",
-	Long:  `Methode en ligne de commande afin d'ajouter une tache.
+	Long: `Methode en ligne de commande afin d'ajouter une tache.
 	le mode interactif est aussi disponible en tapant show`,
 	Run: func(cmd *cobra.Command, args []string) {
 
@@ -32,7 +31,7 @@ var newCmd = &cobra.Command{
 			title := m.inputs[0].Value()
 			note.AddTodo(title)
 		} else {
-			fmt.Println("Ajout de note annulé veuillez tapez une nouvelle commande ")
+			fmt.Println("Ajout d'une nouvelle tâche annulé.")
 		}
 	},
 }
