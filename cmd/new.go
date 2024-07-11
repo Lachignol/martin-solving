@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -65,13 +66,13 @@ func initialModel() model {
 
 		switch i {
 		case 0:
-			t.Placeholder = "Nom de la tache"
+			t.Placeholder = "Nom de la nouvelle tache"
 			t.Focus()
 			t.PromptStyle = focusedStyle
 			t.TextStyle = focusedStyle
-		// case 1:
-		// 	t.Placeholder = "Description"
-		// 	t.CharLimit = 64
+			// case 1:
+			// 	t.Placeholder = "Description"
+			// 	t.CharLimit = 64
 		}
 
 		m.inputs[i] = t

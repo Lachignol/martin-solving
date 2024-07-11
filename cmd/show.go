@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/Lachignol/martin-solving/note"
 	"github.com/spf13/cobra"
@@ -21,6 +22,7 @@ type modelarray struct {
 }
 
 var selectedChoice string
+var selectedNew = false
 var selectedEdit string
 var selectedToggle = -1
 
@@ -48,8 +50,16 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if err != nil {
 				fmt.Println(err)
 			}
-			selectedToggle = index
-			return m, tea.Quit
+			if m.table.SelectedRow()[2] == "✅" {
+				m.table.SelectedRow()[2] = "❌"
+				m.table.SelectedRow()[4] = ""
+			} else {
+				currentTime := time.Now()
+				m.table.SelectedRow()[2] = "✅"
+				m.table.SelectedRow()[4] = currentTime.Format("02 January 2006 15:04:05")
+			}
+			note.Toggle(index)
+			return m,nil
 		case "q", "ctrl+c":
 			return m, tea.Quit
 		case "e":
@@ -62,9 +72,11 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			selectedDel = index
 			return m, tea.Quit
+		case "n":
+			selectedNew = true
+			return m, tea.Quit
 		case "enter":
 			selectedChoice = string(m.table.SelectedRow()[0])
-
 			return m, tea.Quit
 
 		}
@@ -78,8 +90,9 @@ func (m modelarray) View() string {
 		HelpStyle.Render("[ Tapez q ou ctrl+c pour quitter ]") + " " +
 		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + " " +
 		HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
-		HelpStyle.Render("[ Tapez d pour supprimer la tache ]") + " " +
-		HelpStyle.Render("[ Tapez e pour editer la tache ]")
+		HelpStyle.Render("[ Tapez n pour ajouter une tache ]") + " " +
+		HelpStyle.Render("[ Tapez d pour supprimer la tache ]") + " "
+	// HelpStyle.Render("[ Tapez e pour editer la tache ]")
 }
 
 // showCmd represents the show command
@@ -166,11 +179,15 @@ to quickly create a Cobra application.`,
 			} else {
 				fmt.Println("status de la tache correctement changé")
 			}
+		}
+		if selectedNew {
+			newCmd.Run(cmd, []string{})
+			// if err != nil {
+			// 	fmt.Println(err)
+			// }
 
 		}
-
-	},
-}
+	}}
 
 func init() {
 	noteCmd.AddCommand(showCmd)
