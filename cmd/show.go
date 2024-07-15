@@ -21,7 +21,7 @@ type modelarray struct {
 	table table.Model
 }
 
-var selectedChoice string
+var refresh = false
 var selectedNew = false
 var selectedEdit string
 var selectedDel = -1
@@ -57,6 +57,7 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "e":
 			selectedEdit = string(m.table.SelectedRow()[0])
+			refresh = true
 			return m, tea.Quit
 		case "d":
 			index, err := strconv.Atoi(m.table.SelectedRow()[0])
@@ -64,13 +65,15 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				fmt.Println(err)
 			}
 			selectedDel = index
+			refresh = true
 			return m, tea.Quit
 		case "n":
 			selectedNew = true
+			refresh = true
 			return m, tea.Quit
-		// case "enter":
-		// 	selectedChoice = string(m.table.SelectedRow()[0])
-		// 	return m, tea.Quit
+			// case "enter":
+			// 	selectedChoice = string(m.table.SelectedRow()[0])
+			// 	return m, tea.Quit
 
 		}
 	}
@@ -90,7 +93,7 @@ func (m modelarray) View() string {
 		"\n" +
 		"\n" +
 		HelpStyle.Render("[ Tapez Esc ou ctrl+c ou q pour quitter ]") + "\n" +
-		baseStyle.Render(m.table.View()) + "\n" + " " + " "+ " "+
+		baseStyle.Render(m.table.View()) + "\n" + " " + " " + " " +
 		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + "" +
 		HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
 		HelpStyle.Render("[ Tapez n ajouter une tache ]") + " " +
@@ -105,95 +108,92 @@ var showCmd = &cobra.Command{
 	Long:  `Ceci est une liste interactive. Les actions possibles sont renseignées au bas du tableau.`,
 	Args:  cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-
-		columns := []table.Column{
-			{Title: "Id", Width: 4},
-			{Title: "Titre", Width: 109},
-			{Title: "Completed", Width: 9},
-			{Title: "Created_at", Width: 22},
-			{Title: "Completed_at", Width: 22},
-		}
-		notes := note.RecupTodos()
-		var rows = []table.Row{}
-		count := 1
-		for _, note := range notes {
-			completed := note.Completed
-			completedAt := ""
-			var iscompleted string
-			if !completed {
-				iscompleted = "❌"
-			} else {
-				iscompleted = "✅"
-			}
-			if note.Completed_at != nil {
-
-				completedAt = note.Completed_at.Format("02 January 2006 15:04:05")
-			}
-
-			rows = append(rows, table.Row{
-				strconv.FormatInt(int64(count), 10),
-				note.Title,
-				iscompleted,
-				note.Created_at.Format("02 January 2006 15:04:05"),
-				completedAt,
-			})
-			count++
-		}
-
-		t := table.New(
-			table.WithColumns(columns),
-			table.WithRows(rows),
-			table.WithFocused(true),
-			table.WithHeight(20),
-		)
-
-		s := table.DefaultStyles()
-		s.Header = s.Header.
-			BorderStyle(lipgloss.DoubleBorder()).
-			BorderForeground(lipgloss.Color("240")).
-			BorderBottom(true).
-			Bold(true)
-		s.Selected = s.Selected.
-			Foreground(lipgloss.Color("229")).
-			Background(lipgloss.Color("57")).
-			Bold(false)
-		t.SetStyles(s)
-
-		m := modelarray{
-			table: t,
-		}
-		if _, err := tea.NewProgram(m, tea.WithAltScreen()).Run(); err != nil {
-			fmt.Println("Error running program:", err)
-			os.Exit(1)
-		}
-
-		fmt.Println(selectedChoice)
-		if selectedDel != -1 {
-			note.DeleteTodo(selectedDel)
-		}
-		if selectedNew {
-			newCmd.Run(cmd, []string{})
-			// if err != nil {
-			// 	fmt.Println(err)
-			// }
-
-		}
-		if selectedEdit != "" {
-			editCmd.Run(cmd, []string{selectedEdit})
-		}
+		runShowCmd(cmd, args)
 
 	}}
+
+func runShowCmd(cmd *cobra.Command, args []string) {
+	columns := []table.Column{
+		{Title: "Id", Width: 4},
+		{Title: "Titre", Width: 109},
+		{Title: "Completed", Width: 9},
+		{Title: "Created_at", Width: 22},
+		{Title: "Completed_at", Width: 22},
+	}
+	notes := note.RecupTodos()
+	var rows = []table.Row{}
+	count := 1
+	for _, note := range notes {
+		completed := note.Completed
+		completedAt := ""
+		var iscompleted string
+		if !completed {
+			iscompleted = "❌"
+		} else {
+			iscompleted = "✅"
+		}
+		if note.Completed_at != nil {
+			completedAt = note.Completed_at.Format("02 January 2006 15:04:05")
+		}
+
+		rows = append(rows, table.Row{
+			strconv.FormatInt(int64(count), 10),
+			note.Title,
+			iscompleted,
+			note.Created_at.Format("02 January 2006 15:04:05"),
+			completedAt,
+		})
+		count++
+	}
+
+	t := table.New(
+		table.WithColumns(columns),
+		table.WithRows(rows),
+		table.WithFocused(true),
+		table.WithHeight(20),
+	)
+
+	s := table.DefaultStyles()
+	s.Header = s.Header.
+		BorderStyle(lipgloss.DoubleBorder()).
+		BorderForeground(lipgloss.Color("240")).
+		BorderBottom(true).
+		Bold(true)
+	s.Selected = s.Selected.
+		Foreground(lipgloss.Color("229")).
+		Background(lipgloss.Color("57")).
+		Bold(false)
+	t.SetStyles(s)
+
+	m := modelarray{
+		table: t,
+	}
+	if _, err := tea.NewProgram(m, tea.WithAltScreen()).Run(); err != nil {
+		fmt.Println("Error running program:", err)
+		os.Exit(1)
+	}
+	if selectedDel != -1 {
+		note.DeleteTodo(selectedDel)
+	}
+	if selectedNew {
+		newCmd.Run(cmd, []string{})
+
+	}
+	if selectedEdit != "" {
+		editCmd.Run(cmd, []string{selectedEdit})
+
+	}
+	if refresh {
+		selectedNew = false
+		selectedEdit = ""
+		selectedDel = -1
+		refresh = false
+		runShowCmd(cmd, args)
+	}
+
+}
 
 func init() {
 	todoCmd.AddCommand(showCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// showCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// showCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
