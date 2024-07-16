@@ -96,7 +96,7 @@ func (m modelarray) View() string {
 |_|_|_|\_||_|_|    \___)_|_| |_|  (___/ \___/|_| \_/ |_|_| |_|\_|| |
 											                 (_____|
 															 
-						     Todo-list 							    `
+						  *Todo or not todo* 							`
 
 	styledArt := ArtStyle.Render(asciiArt)
 
