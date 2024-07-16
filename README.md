@@ -5,7 +5,7 @@
 
 ### Interphace graphique:
 
-https://github.com/Lachignol/cli-app/assets/110435478/acfd42b1-12cb-406c-826e-a31e1d844e5e
+https://github.com/user-attachments/assets/29f73125-7062-4019-845f-0dcbe904e502
 
 - [x] Ajout d'une nouvelle tâche.
 - [x] Possibilité de marquer la tâche comme "complétée".
