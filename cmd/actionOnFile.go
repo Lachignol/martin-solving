@@ -26,7 +26,7 @@ var actionOnFileCmd = &cobra.Command{
 		strContent := string(readFile)
 		//action sur le fichier
 		// changeOnFile(strContent) //completer la fonction
-		strContent = strings.ReplaceAll(strContent, "t", "T")
+		strContent = strings.ReplaceAll(strContent, "/", "//")
 		//ecriture du nouveau fichier avec le contenu modifié
 		write(args[1], strContent)
 		//affichage du contenu du fichier

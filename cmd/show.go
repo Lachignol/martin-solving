@@ -18,7 +18,9 @@ import (
 )
 
 type modelarray struct {
-	table table.Model
+	table  table.Model
+	width  int
+	height int
 }
 
 var refresh = false
@@ -35,6 +37,9 @@ func (m modelarray) Init() tea.Cmd { return nil }
 func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "t":
@@ -82,24 +87,34 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m modelarray) View() string {
-	return TitleStyle.Render("----------------------------------------------------------------------------------Martin Solving Todo-----------------------------------------------------------------------------") + "\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		"\n" +
-		HelpStyle.Render("[ Tapez Esc ou ctrl+c ou q pour quitter ]") + "\n" +
-		baseStyle.Render(m.table.View()) + "\n" + " " + " " + " " +
-		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + "" +
-		HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
-		HelpStyle.Render("[ Tapez n ajouter une tache ]") + " " +
-		HelpStyle.Render("[ Tapez e modifier le titre d'une tache ]") + " " +
-		HelpStyle.Render("[ Tapez d supprimer la tache ]") + " "
+
+	centeredTitle := lipgloss.Place(m.width, m.height/2,
+		lipgloss.Center, lipgloss.Center, "titre a mettre")
+
+	return lipgloss.JoinVertical(lipgloss.Left,
+		centeredTitle,
+		HelpStyle.Render("[ Tapez Esc ou ctrl+c ou q pour quitter ]")+"\n"+
+			baseStyle.Render(m.table.View())+"\n"+" "+" "+" "+
+			HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]")+""+
+			HelpStyle.Render("[ Tapez t completer/décompleter la tache ]")+" "+
+			HelpStyle.Render("[ Tapez n ajouter une tache ]")+" "+
+			HelpStyle.Render("[ Tapez e modifier le titre d'une tache ]")+" "+
+			HelpStyle.Render("[ Tapez d supprimer la tache ]")+" ",
+	)
 }
+
+// 	TitleStyle.Render("----------------------------------------------------------------------------------Martin Solving Todo-----------------------------------------------------------------------------") + "\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+// 		"\n" +
+
+// }
 
 // showCmd represents the show command
 var showCmd = &cobra.Command{
