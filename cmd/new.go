@@ -20,7 +20,7 @@ var newCmd = &cobra.Command{
 	Short: "Ajouter une nouvelle note",
 	Long: `Methode en ligne de commande afin d'ajouter une tache.
 	le mode interactif est aussi disponible en tapant show`,
-	Args:  cobra.ExactArgs(0),
+	Args: cobra.ExactArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		if _, err := tea.NewProgram(InitialModel(), tea.WithAltScreen()).Run(); err != nil {
@@ -37,8 +37,21 @@ var newCmd = &cobra.Command{
 	},
 }
 var readyToAdd bool
+var (
+	Violet        = lipgloss.Color("93")
+	VioletMoyen   = lipgloss.Color("54")
+	VioletFoncé   = lipgloss.Color("55")
+	VioletLavande = lipgloss.Color("99")
+	BleuClair     = lipgloss.Color("33")
+	BleuMoyen     = lipgloss.Color("27")
+	BleuFoncé     = lipgloss.Color("21")
+	BleuRoyal     = lipgloss.Color("69")
+	Couleur       = lipgloss.Color("57")
+	White         = lipgloss.Color("33")
+)
 var M model
 var (
+	ArtStyle     = lipgloss.NewStyle()
 	FocusedStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("205"))
 	TitleStyle   = lipgloss.NewStyle().Foreground(lipgloss.Color("205")).AlignVertical(lipgloss.Center)
 	FormStyle    = lipgloss.NewStyle().MarginLeft(75).MarginTop(20)

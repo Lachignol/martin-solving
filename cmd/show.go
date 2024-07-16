@@ -88,8 +88,20 @@ func (m modelarray) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m modelarray) View() string {
 
+	asciiArt := `	                    _                     _       _             
+	               _   (_)                   | |     (_)            
+   ____   ____  ____| |_  _ ____      ___  ___ | |_   _ _ ____   ____  
+|    \ / _  |/ ___)  _)| |  _ \    /___)/ _ \| | | | | |  _ \ / _  |
+| | | ( ( | | |   | |__| | | | |  |___ | |_| | |\ V /| | | | ( ( | |
+|_|_|_|\_||_|_|    \___)_|_| |_|  (___/ \___/|_| \_/ |_|_| |_|\_|| |
+											                 (_____|
+															 
+						     Todo-list 							    `
+
+	styledArt := ArtStyle.Render(asciiArt)
+
 	centeredTitle := lipgloss.Place(m.width, m.height/2,
-		lipgloss.Center, lipgloss.Center, "titre a mettre")
+		lipgloss.Center, lipgloss.Center, styledArt)
 
 	return lipgloss.JoinVertical(lipgloss.Left,
 		centeredTitle,
@@ -102,19 +114,6 @@ func (m modelarray) View() string {
 			HelpStyle.Render("[ Tapez d supprimer la tache ]")+" ",
 	)
 }
-
-// 	TitleStyle.Render("----------------------------------------------------------------------------------Martin Solving Todo-----------------------------------------------------------------------------") + "\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-// 		"\n" +
-
-// }
 
 // showCmd represents the show command
 var showCmd = &cobra.Command{
