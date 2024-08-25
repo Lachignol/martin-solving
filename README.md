@@ -39,15 +39,15 @@ Elle permet de remplacer un motif spécifique dans un fichier d'entrée et de cr
 
 - [x] Choix du fichier à modifier en entrée.
 - [x] Choix du pattern à remplacer/choix du pattern de remplacement.
+      
+https://github.com/user-attachments/assets/7a293494-44c4-4cd8-9693-e76cd2505a66
+      
 - [x] Création du fichier en sortie.
 - [x] Affichage de la commande CLI avec les flags pour une utilisation ultérieure.
+      
+https://github.com/user-attachments/assets/4086b518-dd42-4453-873f-1bb6f45fe9c6
 
 ### Commande cli :
-
-#### Description des flags :
-
-<img width="1434" alt="Capture d’écran 2024-08-26 à 01 07 41" src="https://github.com/user-attachments/assets/d2b6336f-ba61-4f96-b359-9cffa62fdaba">
-
 
 #### Exemple :
 
@@ -55,10 +55,12 @@ Elle permet de remplacer un motif spécifique dans un fichier d'entrée et de cr
 martin-solving actionOnFile -i cheminDuFichier/nomDufichier.txt -o cheminDuFichier/nomDufichier.txt -r 'patternARemplacer' -b 'patternDeRemplacement'
 ```
 
+https://github.com/user-attachments/assets/31481b79-379c-4c33-86a6-7325e0a0420c
 
 
+#### Description des flags :
 
-
+<img width="1434" alt="Capture d’écran 2024-08-26 à 01 07 41" src="https://github.com/user-attachments/assets/d2b6336f-ba61-4f96-b359-9cffa62fdaba">
 
 
 ## Uninstall afin de pouvoir supprimer proprement l'application.
