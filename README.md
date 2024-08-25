@@ -64,15 +64,5 @@ https://github.com/user-attachments/assets/31481b79-379c-4c33-86a6-7325e0a0420c
 
 
 ## Uninstall afin de pouvoir supprimer proprement l'application.
-      
-<img width="1133" alt="uninstall screenshot" src="https://github.com/Lachignol/cli-app/assets/110435478/cf43a513-d0e7-48b0-ae64-f18b0db4530d">
 
-
-
-
-
-
-
-
-
-
+<img width="1434" alt="uninstall-snapshot" src="https://github.com/user-attachments/assets/69461641-ebcb-4f24-9431-6d6b016d6baa">
