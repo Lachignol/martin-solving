@@ -59,7 +59,6 @@ var actionOnFileCmd = &cobra.Command{
 			fmt.Println(strContent + "\n" + "\n")
 			strReplace := ask("\nPattern à remplacer:", "Choisir un pattern à remplacer est obligatoire.")
 			strReplaceBy := ask("\nPattern de remplacement:", "Choisir un pattern de remplacement est obligatoire.")
-			fmt.Println("\n Flag:[-replace]/[-r] Le pattern a remplacer est :" + strReplace + "\n" + "Flag:[-by]/[-b] Le pattern de remplacement est :" + strReplaceBy + "\n")
 			// changeOnFile(strContent) //completer la fonction
 			strContent = strings.ReplaceAll(strContent, strReplace, strReplaceBy)
 
