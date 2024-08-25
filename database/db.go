@@ -72,6 +72,8 @@ func Uninstall() {
 		log.Fatal(e)
 
 	}
-	log.Printf("Supression du repertoire %v\n\nIl ne vous reste plus qu'a supprimer le binaire 'martin-solving' dans le repertoire $HOME/go/bin/ .Pour y accéder,tapez 'cd $HOME/go/bin/'.\n", dirpath)
+	log.Printf("Supression du repertoire %v\nCas n°1\n[Installation par homebrew] Il ne vous reste plus qu'a tapez : brew uninstall --force martin-solving \n", dirpath)
+	log.Printf("\nCas n°2\n[Installation dans le repertoire courant] Il ne vous reste plus qu'a supprimer le binaire 'martin-solving' dans le repertoire courant.\n")
+	log.Printf("\nCas n°3\n[Installation dans votre Path Golang] Il ne vous reste plus qu'a supprimer le binaire 'martin-solving' dans le repertoire $HOME/go/bin/ .Pour y accéder,tapez 'cd $HOME/go/bin/'.\n")
 
 }
