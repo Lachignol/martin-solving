@@ -87,6 +87,7 @@ var actionOnFileCmd = &cobra.Command{
 			//affichage du contenu du fichier
 
 			fmt.Print(strContent)
+			fmt.Print("\n*****************************************************************************************************************************************\n")
 			fmt.Print("\nPour gagner du temps à l'avenir, vous pouvez utiliser la commande ci-dessous, issue de l'action que vous venez d'effectuer, comme exemple.\n")
 			fmt.Printf("martin-solving actionOnFile -i %s -o %s -r '%s' -b '%s' ", file, directory, strReplace, strReplaceBy)
 
