@@ -1,6 +1,6 @@
 # Voici mon application multi-tool CLI
 
-### Installation avec Homebrew :
+### Installation avec Homebrew uniquement sur Mac :
 
 Tapez :
 
