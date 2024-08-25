@@ -38,7 +38,7 @@ var actionOnFileCmd = &cobra.Command{
 		 if inputValue == "" && outputValue == "" && replaceValue == "" && replaceByValue == "" {
 			fp := filepicker.New()
 			fp.DirAllowed = false
-			fp.AllowedTypes = []string{".mod", ".sum", ".go", ".txt", ".md"}
+			fp.AllowedTypes = []string{".txt"}
 			// pour definire le repertoire courant au repertoire user  remplacer par :
 			// fp.CurrentDirectory = "./"
 			fp.CurrentDirectory, _ = os.UserHomeDir()
