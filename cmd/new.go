@@ -101,62 +101,62 @@ func (m model) init() tea.Cmd {
 	return textinput.Blink
 }
 
-func (m model) update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c", "esc":
-			return m, tea.Quit
+// func (m model) update(msg tea.Msg) (tea.Model, tea.Cmd) {
+// 	switch msg := msg.(type) {
+// 	case tea.KeyMsg:
+// 		switch msg.String() {
+// 		case "ctrl+c", "esc":
+// 			return m, tea.Quit
 
-		// Set focus to next input
-		case "tab", "shift+tab", "enter", "up", "down":
-			s := msg.String()
+// 		// Set focus to next input
+// 		case "tab", "shift+tab", "enter", "up", "down":
+// 			s := msg.String()
 
-			// Did the user press enter while the submit button was focused?
-			// If so, exit.
-			if s == "enter" && m.focusIndex == len(m.inputs) {
-				//initialisation de la variable dans le scope global a true quand on appui sur submit
-				//pour ensuite l'ajouté au notes
+// 			// Did the user press enter while the submit button was focused?
+// 			// If so, exit.
+// 			if s == "enter" && m.focusIndex == len(m.inputs) {
+// 				//initialisation de la variable dans le scope global a true quand on appui sur submit
+// 				//pour ensuite l'ajouté au notes
 
-				readyToAdd = true
-				return m, tea.Quit
-			}
-			// Cycle indexes
-			if s == "up" || s == "shift+tab" {
-				m.focusIndex--
-			} else {
-				m.focusIndex++
-			}
+// 				readyToAdd = true
+// 				return m, tea.Quit
+// 			}
+// 			// Cycle indexes
+// 			if s == "up" || s == "shift+tab" {
+// 				m.focusIndex--
+// 			} else {
+// 				m.focusIndex++
+// 			}
 
-			if m.focusIndex > len(m.inputs) {
-				m.focusIndex = 0
-			} else if m.focusIndex < 0 {
-				m.focusIndex = len(m.inputs)
-			}
+// 			if m.focusIndex > len(m.inputs) {
+// 				m.focusIndex = 0
+// 			} else if m.focusIndex < 0 {
+// 				m.focusIndex = len(m.inputs)
+// 			}
 
-			cmds := make([]tea.Cmd, len(m.inputs))
-			for i := 0; i <= len(m.inputs)-1; i++ {
-				if i == m.focusIndex {
-					// Set focused state
-					cmds[i] = m.inputs[i].Focus()
-					m.inputs[i].PromptStyle = FocusedStyle
-					m.inputs[i].TextStyle = FocusedStyle
-					continue
-				}
-				// Remove focused state
-				m.inputs[i].Blur()
-				m.inputs[i].PromptStyle = NoStyle
-				m.inputs[i].TextStyle = NoStyle
-			}
+// 			cmds := make([]tea.Cmd, len(m.inputs))
+// 			for i := 0; i <= len(m.inputs)-1; i++ {
+// 				if i == m.focusIndex {
+// 					// Set focused state
+// 					cmds[i] = m.inputs[i].Focus()
+// 					m.inputs[i].PromptStyle = FocusedStyle
+// 					m.inputs[i].TextStyle = FocusedStyle
+// 					continue
+// 				}
+// 				// Remove focused state
+// 				m.inputs[i].Blur()
+// 				m.inputs[i].PromptStyle = NoStyle
+// 				m.inputs[i].TextStyle = NoStyle
+// 			}
 
-			return m, tea.Batch(cmds...)
-		}
-	}
-	// Handle character input and blinking
-	cmd := m.updateInputs(msg)
+// 			return m, tea.Batch(cmds...)
+// 		}
+// 	}
+// 	// Handle character input and blinking
+// 	cmd := m.updateInputs(msg)
 
-	return m, cmd
-}
+// 	return m, cmd
+// }
 
 func (m *model) UpdateInputs(msg tea.Msg) tea.Cmd {
 	cmds := make([]tea.Cmd, len(m.inputs))
