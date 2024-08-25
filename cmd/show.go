@@ -100,18 +100,26 @@ func (m modelarray) View() string {
 
 	styledArt := ArtStyle.Render(asciiArt)
 
+	exitcmd := HelpStyle.Render(`[ Tapez Esc ou ctrl+c ou q pour quitter ]`)
+
 	centeredTitle := lipgloss.Place(m.width, m.height/2,
 		lipgloss.Center, lipgloss.Center, styledArt)
 
-	return lipgloss.JoinVertical(lipgloss.Left,
+	centeredTable := lipgloss.Place(m.width, lipgloss.Height(m.table.View()),
+		lipgloss.Center, lipgloss.Center, baseStyle.Render(m.table.View()))
+
+	helpText :=
+		HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]") + " " +
+			HelpStyle.Render("[ Tapez t completer/décompleter la tache ]") + " " +
+			HelpStyle.Render("[ Tapez n ajouter une tache ]") + " " +
+			HelpStyle.Render("[ Tapez e modifier le titre d'une tache ]") + " " +
+			HelpStyle.Render("[ Tapez d supprimer la tache ]")
+
+	return lipgloss.JoinVertical(lipgloss.Center,
 		centeredTitle,
-		HelpStyle.Render("[ Tapez Esc ou ctrl+c ou q pour quitter ]")+"\n"+
-			baseStyle.Render(m.table.View())+"\n"+" "+" "+" "+
-			HelpStyle.Render("[ Naviguer avec ⬆ et ⬇ ]")+""+
-			HelpStyle.Render("[ Tapez t completer/décompleter la tache ]")+" "+
-			HelpStyle.Render("[ Tapez n ajouter une tache ]")+" "+
-			HelpStyle.Render("[ Tapez e modifier le titre d'une tache ]")+" "+
-			HelpStyle.Render("[ Tapez d supprimer la tache ]")+" ",
+		exitcmd,
+		centeredTable,
+		helpText,
 	)
 }
 
