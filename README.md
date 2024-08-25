@@ -18,18 +18,21 @@ brew install lachignol/lachignol/martin-solving
 
 ### Interface graphique:
 
-https://github.com/user-attachments/assets/29f73125-7062-4019-845f-0dcbe904e502
-
 - [x] Ajout d'une nouvelle tâche.
 - [x] Possibilité de marquer la tâche comme "complétée".
 - [x] Lister les tâches sous forme d'un tableau graphique.
 - [x] Suppression d'une tâche.
+      
+Toutes ces commandes sont aussi exécutables en simple ligne de commande .
+      
+https://github.com/user-attachments/assets/29f73125-7062-4019-845f-0dcbe904e502
+
+
+
 - [x] Mise en place d'un moyen de stockage persistant et accessible depuis n'importe quel endroit dans votre terminal (BDD SQlite):
 
-      
-      
 <img width="1133" alt="installation:todocmd screenshot" src="https://github.com/Lachignol/cli-app/assets/110435478/a4a2c0b0-66cd-4d9f-ac3d-1bbda79c7fd5">
-Toutes ces commandes sont aussi exécutables en simple ligne de commande .
+
 
 ## Deuxieme fonctionnalité actionOnFile.
 Elle permet de remplacer un motif spécifique dans un fichier d'entrée et de créer un nouveau fichier en sortie contenant le contenu modifié. Elle est particulièrement utile pour les utilisateurs qui souhaitent effectuer des remplacements de texte dans des fichiers sans modifier l'original.
