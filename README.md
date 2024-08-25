@@ -1,9 +1,22 @@
-# Voici mon application multi-tool cli
+# Voici mon application multi-tool CLI
 
- ## Voici ma premiere fonctionalité la plus basique 😀 la todo-list !!!!
+### Installation avec Homebrew :
+
+Tapez :
+
+```
+brew tap Lachignol/homebrew-Lachignol 
+```
+
+```
+brew install lachignol/lachignol/martin-solving
+```
 
 
-### Interphace graphique:
+ ## Voici ma premiere fonctionnalité la plus basique 😀 la todo-list !!!!
+
+
+### Interface graphique:
 
 https://github.com/user-attachments/assets/29f73125-7062-4019-845f-0dcbe904e502
 
@@ -11,7 +24,7 @@ https://github.com/user-attachments/assets/29f73125-7062-4019-845f-0dcbe904e502
 - [x] Possibilité de marquer la tâche comme "complétée".
 - [x] Lister les tâches sous forme d'un tableau graphique.
 - [x] Suppression d'une tâche.
-- [x] Mise en place d'un moyen de stockage persistant et accessible depuis n'importe quel endroit dans votre terminal (bdd sqlite):
+- [x] Mise en place d'un moyen de stockage persistant et accessible depuis n'importe quel endroit dans votre terminal (BDD SQlite):
 
       
       
@@ -30,6 +43,6 @@ https://github.com/user-attachments/assets/29f73125-7062-4019-845f-0dcbe904e502
 
 
 
-### Toutes ces commandes sont executable en ligne de commande simple.
+### Toutes ces commandes sont aussi exécutables en simple ligne de commande .
 
 
